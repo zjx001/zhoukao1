@@ -9,14 +9,9 @@ const url = require('url')
 
 //编译sass
 gulp.task("sass", () => {
-    return gulp.src('./src/scss/**/index.scss')
+    return gulp.src('./src/scss/index.scss')
         .pipe(Sass())
         .pipe(gulp.dest('./src/css'))
-})
-
-//监听编译sass
-gulp.task("watch", () => {
-    return gulp.watch('./src/scss/**/*.scss', gulp.series('sass'))
 })
 
 // //压缩css
@@ -33,23 +28,29 @@ gulp.task("devjs", () => {
         .pipe(gulp.dest('./list/js'))
 })
 
+//监听css js
+gulp.task("watch", () => {
+    // gulp.watch('./src/scss/**/*.scss', gulp.series('sass'));
+    gulp.watch('./src/js/**/*.js', gulp.series('devjs'))
+})
+
 //起服务
 gulp.task("server", () => {
-    return gulp.src('./src')
+    return gulp.src('/src')
         .pipe(webserver({
-            port: 8080,
+            port: 3000,
             livereload: true,
             middleware: function(req, res) {
                 if (req.url === '/favicon.ico') {
                     return res.end()
                 }
-                let pathname = url.parse(req.url, true)
+                let { pathname } = url.parse(req.url, true)
                 if (pathname === '/api') {
                     res.end()
                 } else {
                     pathname = pathname === '/' ? 'index.html' : pathname
-                    const file = fs.readFileSync('./src/index.html')
-                    res.end(file)
+                    const file = fs.readFileSync(path.join(__dirname, 'src', pathname))
+                    res.end()
                 }
             }
         }))
