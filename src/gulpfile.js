@@ -9,7 +9,7 @@ const url = require('url')
 
 //编译sass
 gulp.task("sass", () => {
-    return gulp.src('./src/scss/**/*.scss')
+    return gulp.src('./src/scss/**/index.scss')
         .pipe(Sass())
         .pipe(gulp.dest('./src/css'))
 })
@@ -19,12 +19,12 @@ gulp.task("watch", () => {
     return gulp.watch('./src/scss/**/*.scss', gulp.series('sass'))
 })
 
-//压缩css
-gulp.task("devcss", () => {
-    return gulp.src('./src/scss/**/*.css')
-        .pipe(mincss())
-        .pipe(gulp.dest('./list/css'))
-})
+// //压缩css
+// gulp.task("devcss", () => {
+//     return gulp.src('./src/scss/**/*.css')
+//         .pipe(mincss())
+//         .pipe(gulp.dest('./list/css'))
+// })
 
 //压缩js
 gulp.task("devjs", () => {
@@ -57,4 +57,4 @@ gulp.task("server", () => {
 })
 
 //监听css，js，watch，server
-gulp.task('default', gulp.parallel('watch', 'devcss', 'devjs', 'server'))
+gulp.task('default', gulp.parallel('watch', 'devjs', 'server'))

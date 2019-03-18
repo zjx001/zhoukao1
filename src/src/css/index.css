@@ -7,4 +7,15 @@
 .box {
   width: 100%;
   height: 100%;
-  display: flex; }
+  display: flex;
+  flex-direction: column; }
+  .box header {
+    width: 100%;
+    height: 1.2rem; }
+  .box main {
+    width: 100%;
+    flex: 1; }
+  .box footer {
+    width: 100%;
+    height: 1.33333rem;
+    border-bottom: 0.02667rem solid #ccc; }
